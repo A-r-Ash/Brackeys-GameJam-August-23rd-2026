@@ -1,10 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private int carryCapacity = 5;
     [SerializeField] private float fuelPerWood = 10f;
-    [SerializeField] private int carriedWood = 0;   // visible so you can watch it
+    [SerializeField] private int carriedWood = 0;
+    [SerializeField] private TMP_Text carryingText;   // world-space text under the player
 
     private WoodPile nearbyPile;
     private Bonfire nearbyFire;
@@ -13,21 +15,24 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.E)) return;
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (nearbyFire != null && carriedWood > 0)          // at fire → dump wood in
+            {
+                nearbyFire.AddFuel(carriedWood * fuelPerWood);
+                carriedWood = 0;
+            }
+            else if (nearbyPile != null)                        // at pile → grab wood
+            {
+                int space = carryCapacity - carriedWood;
+                if (space > 0)
+                    carriedWood += nearbyPile.TakeWood(space);
+            }
+        }
 
-        // At the fire with wood in hand → dump it in
-        if (nearbyFire != null && carriedWood > 0)
-        {
-            nearbyFire.AddFuel(carriedWood * fuelPerWood);
-            carriedWood = 0;
-        }
-        // At the pile → grab as much as we can carry
-        else if (nearbyPile != null)
-        {
-            int space = carryCapacity - carriedWood;
-            if (space > 0)
-                carriedWood += nearbyPile.TakeWood(space);
-        }
+        // Show text only while carrying, blank otherwise
+        if (carryingText != null)
+            carryingText.text = carriedWood > 0 ? "Carrying: " + carriedWood : "";
     }
 
     void OnTriggerEnter2D(Collider2D other)
