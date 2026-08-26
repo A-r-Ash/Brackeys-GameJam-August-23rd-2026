@@ -24,9 +24,10 @@ public class PlayerInteract : MonoBehaviour
             }
             else if (nearbyPile != null)                        // at pile → grab wood
             {
-                int space = carryCapacity - carriedWood;
-                if (space > 0)
-                    carriedWood += nearbyPile.TakeWood(space);
+                if (carriedWood < carryCapacity)
+                {
+                    carriedWood += nearbyPile.TakeWood(1);
+                }
             }
         }
 
