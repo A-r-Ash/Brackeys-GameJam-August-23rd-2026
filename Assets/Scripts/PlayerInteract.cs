@@ -15,28 +15,31 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (nearbyFire != null && carriedWood > 0)          // at fire → dump wood in
-            {
-                nearbyFire.AddFuel(carriedWood * fuelPerWood);
-                carriedWood = 0;
-                SoundManager.Instance?.Burn();                  // feeding the fire
-            }
-            else if (nearbyPile != null)                        // at pile → grab wood
-            {
-                if (carriedWood < carryCapacity)
-                {
-                    int taken = nearbyPile.TakeWood(1);
-                    carriedWood += taken;
-                    if (taken > 0) SoundManager.Instance?.WoodGather();   // picked up wood
-                }
-            }
-        }
+        if (Input.GetKeyDown(KeyCode.E)) DoInteract();
 
         // Show text only while carrying, blank otherwise
         if (carryingText != null)
             carryingText.text = carriedWood > 0 ? "Carrying: " + carriedWood : "";
+    }
+
+    // Called by the E key AND the mobile Interact button
+    public void DoInteract()
+    {
+        if (nearbyFire != null && carriedWood > 0)          // at fire → dump wood in
+        {
+            nearbyFire.AddFuel(carriedWood * fuelPerWood);
+            carriedWood = 0;
+            SoundManager.Instance?.Burn();                  // feeding the fire
+        }
+        else if (nearbyPile != null)                        // at pile → grab wood
+        {
+            if (carriedWood < carryCapacity)
+            {
+                int taken = nearbyPile.TakeWood(1);
+                carriedWood += taken;
+                if (taken > 0) SoundManager.Instance?.WoodGather();   // picked up wood
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

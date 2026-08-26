@@ -18,8 +18,13 @@ public class PlayerAccuse : MonoBehaviour
         target = FindClosestNPC();
         UpdateSelector();
 
-        if (Input.GetKeyDown(accuseKey) && target != null)
-            Accuse(target);
+        if (Input.GetKeyDown(accuseKey)) DoAccuse();
+    }
+
+    // Called by the F key AND the mobile Accuse button
+    public void DoAccuse()
+    {
+        if (target != null) Accuse(target);
     }
 
     NPCGatherer FindClosestNPC()

@@ -51,7 +51,7 @@ MonoBehaviour:
   pile: {fileID: 0}
   cycle: {fileID: 0}
   stateText: {fileID: 8939359108264728906}
-  moveSpeed: 1
+  moveSpeed: 0.25
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
