@@ -625,7 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAccuse
   accuseRadius: 1.5
   accuseKey: 102
-  selector: {fileID: 0}
+  selector: {fileID: 3116263846064155254, guid: 01ebabdd616c99a49891923ad72a9f6d, type: 3}
 --- !u!114 &5213030963248365488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,6 +641,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   sprite: {fileID: 5733992448693988417}
   moveThreshold: 0.01
+  stopDelay: 0.1
+  walkSource: {fileID: 0}
 --- !u!1 &5353790790971947556
 GameObject:
   m_ObjectHideFlags: 0

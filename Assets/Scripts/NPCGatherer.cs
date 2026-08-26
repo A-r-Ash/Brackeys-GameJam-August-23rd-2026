@@ -16,6 +16,7 @@ public class NPCGatherer : MonoBehaviour
     [Header("Day gathering")]
     [SerializeField] private float gatherTime = 2f;
     [SerializeField] private int woodPerTrip = 1;
+    [SerializeField] private float stuckTime = 1.5f;   // no-movement time in GoingToGather before resetting
 
     [Header("Night wander")]
     [SerializeField] private Vector2 wanderSize = new Vector2(8f, 6f);   // rectangle (width, height) NPCs roam in
@@ -24,10 +25,11 @@ public class NPCGatherer : MonoBehaviour
     [SerializeField] private bool isImpostor = false;
     [SerializeField] private float sabotageInterval = 6f;  // wander time between thefts
     [SerializeField] private int stealAmount = 3;          // wood taken per theft
+    [SerializeField] private float stealDuration = 2f;     // time spent stealing at the pile (catch window)
 
     public static int Count { get; private set; }
 
-    public enum State { GoingToGather, Gathering, ReturningToPile, Wandering, Stealing, Dumping }
+    public enum State { GoingToGather, Gathering, ReturningToPile, GoToEntrance, NightDepositWood, GoToBonfire, Wandering, Stealing, StealingAtPile, Dumping }
     private State state = State.GoingToGather;
     public State CurrentState => state;
     public bool IsImpostor => isImpostor;
@@ -37,19 +39,28 @@ public class NPCGatherer : MonoBehaviour
     private List<Transform> entrances = new List<Transform>();
     private Transform currentSpot;
     private Transform dumpEntrance;
+    private Transform nightEntrance;
     private float gatherTimer;
 
     private Vector3 wanderTarget;
     private Vector3 campCenter;
     private float sabotageTimer;
+    private float stealTimer;
     private int carriedStolen;
+    private bool carryingWood;
     private bool wasNight;
+    private Vector3 lastStuckPos;
+    private float stuckTimer;
 
     void OnEnable()  { Count++; }
     void OnDisable() { Count--; }
 
     void Awake()
     {
+        // Auto-find scene refs so runtime-spawned NPCs work without manual wiring
+        if (pile == null)  pile  = FindFirstObjectByType<WoodPile>();
+        if (cycle == null) cycle = FindFirstObjectByType<DayNightCycle>();
+
         foreach (Tree t in FindObjectsByType<Tree>(FindObjectsSortMode.None))
             gatherSpots.Add(t.transform);
 
@@ -72,9 +83,13 @@ public class NPCGatherer : MonoBehaviour
             wasNight = night;
             if (night)
             {
-                state = State.Wandering;         // everyone comes inside and wanders
-                PickWanderTarget();
+                // Head in through the nearest gate first, then deposit/fire
+                nightEntrance = NearestEntrance();
+                state = nightEntrance != null ? State.GoToEntrance
+                      : carryingWood ? State.NightDepositWood
+                      : State.GoToBonfire;
                 sabotageTimer = sabotageInterval;
+                if (!isImpostor) SoundManager.Instance?.Mumble();   // innocent crew murmurs at night
             }
             else
             {
@@ -85,6 +100,26 @@ public class NPCGatherer : MonoBehaviour
 
         if (night) NightUpdate();
         else       DayUpdate();
+
+        // Stuck safety net: if a "go somewhere" state stalls, reset it
+        bool travelling = state == State.GoingToGather
+                       || state == State.GoToBonfire
+                       || state == State.NightDepositWood;
+
+        float moved = (transform.position - lastStuckPos).magnitude;
+        bool notMoving = moved < moveSpeed * 0.1f * Time.deltaTime;   // moved <10% of expected step → frozen
+
+        if (travelling && notMoving)
+        {
+            stuckTimer += Time.deltaTime;
+            if (stuckTimer >= stuckTime)
+            {
+                ResetStuck();
+                stuckTimer = 0f;
+            }
+        }
+        else stuckTimer = 0f;
+        lastStuckPos = transform.position;
 
         if (stateText != null) stateText.text = state.ToString();
     }
@@ -101,19 +136,25 @@ public class NPCGatherer : MonoBehaviour
                 {
                     gatherTimer = gatherTime;
                     state = State.Gathering;
+                    SoundManager.Instance?.WoodCut();   // chopping the tree
                 }
                 break;
 
             case State.Gathering:
                 gatherTimer -= Time.deltaTime;
                 if (gatherTimer <= 0f)
+                {
+                    carryingWood = true;             // chopped → now carrying it back
                     state = State.ReturningToPile;
+                }
                 break;
 
             case State.ReturningToPile:
                 if (MoveTo(pile.transform.position))
                 {
                     pile.AddWood(woodPerTrip);
+                    SoundManager.Instance?.WoodPut();   // dropping wood in the pile
+                    carryingWood = false;
                     currentSpot = PickTree();
                     state = State.GoingToGather;
                 }
@@ -126,6 +167,29 @@ public class NPCGatherer : MonoBehaviour
     {
         switch (state)
         {
+            case State.GoToEntrance:                     // come in through the nearest gate first
+                if (nightEntrance == null || MoveTo(nightEntrance.position))
+                    state = carryingWood ? State.NightDepositWood : State.GoToBonfire;
+                break;
+
+            case State.NightDepositWood:                 // carrying wood → drop it at the pile first
+                if (MoveTo(pile.transform.position))
+                {
+                    pile.AddWood(woodPerTrip);
+                    SoundManager.Instance?.WoodPut();
+                    carryingWood = false;
+                    state = State.GoToBonfire;
+                }
+                break;
+
+            case State.GoToBonfire:                      // head to the fire, then start wandering around it
+                if (MoveTo(campCenter))
+                {
+                    PickWanderTarget();
+                    state = State.Wandering;
+                }
+                break;
+
             case State.Wandering:
                 if (MoveTo(wanderTarget))
                     PickWanderTarget();
@@ -134,12 +198,24 @@ public class NPCGatherer : MonoBehaviour
                 {
                     sabotageTimer -= Time.deltaTime;
                     if (sabotageTimer <= 0f)
+                    {
                         state = State.Stealing;
+                        SoundManager.Instance?.ZombieGrowl();   // impostor slinks off to steal
+                    }
                 }
                 break;
 
-            case State.Stealing:                         // go to pile, grab wood
+            case State.Stealing:                         // walk to the pile
                 if (MoveTo(pile.transform.position))
+                {
+                    stealTimer = stealDuration;          // arrived → start stealing
+                    state = State.StealingAtPile;
+                }
+                break;
+
+            case State.StealingAtPile:                   // stand at the pile and steal over time (catch window)
+                stealTimer -= Time.deltaTime;
+                if (stealTimer <= 0f)
                 {
                     carriedStolen = pile.TakeWood(stealAmount);
                     dumpEntrance = PickEntrance();
@@ -170,9 +246,50 @@ public class NPCGatherer : MonoBehaviour
 
     void PickWanderTarget()
     {
-        float x = Random.Range(-wanderSize.x * 0.5f, wanderSize.x * 0.5f);
-        float y = Random.Range(-wanderSize.y * 0.5f, wanderSize.y * 0.5f);
-        wanderTarget = campCenter + new Vector3(x, y, 0f);
+        // Keep wander points inside the walls: a valid point has no wall between it and the bonfire
+        for (int attempt = 0; attempt < 10; attempt++)
+        {
+            float x = Random.Range(-wanderSize.x * 0.5f, wanderSize.x * 0.5f);
+            float y = Random.Range(-wanderSize.y * 0.5f, wanderSize.y * 0.5f);
+            Vector3 candidate = campCenter + new Vector3(x, y, 0f);
+
+            if (!WallBetween(campCenter, candidate))
+            {
+                wanderTarget = candidate;
+                return;
+            }
+        }
+        wanderTarget = campCenter;   // fallback: hug the fire
+    }
+
+    void ResetStuck()
+    {
+        switch (state)
+        {
+            case State.GoingToGather:
+                currentSpot = PickTree();            // new tree to head for
+                break;
+
+            case State.GoToBonfire:
+            case State.NightDepositWood:
+                nightEntrance = NearestEntrance();   // re-enter through the nearest gate
+                state = nightEntrance != null ? State.GoToEntrance
+                      : carryingWood ? State.NightDepositWood
+                      : State.GoToBonfire;
+                break;
+        }
+    }
+
+    private Transform NearestEntrance()
+    {
+        Transform best = null;
+        float bestDist = Mathf.Infinity;
+        foreach (Transform e in entrances)
+        {
+            float d = Vector2.Distance(transform.position, e.position);
+            if (d < bestDist) { bestDist = d; best = e; }
+        }
+        return best;
     }
 
     private Transform PickTree()

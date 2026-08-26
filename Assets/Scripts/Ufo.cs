@@ -30,6 +30,7 @@ public class Ufo : MonoBehaviour
         yield return MoveTo(transform, stopPos, flySpeed);          // fly in
 
         if (beam != null) beam.SetActive(true);                    // beam on
+        SoundManager.Instance?.UvLightOn();
         yield return new WaitForSeconds(beamDuration);             // ...glows for this long
 
         GameObject alien = null;                                   // drop alien at the beam's base
@@ -41,6 +42,7 @@ public class Ufo : MonoBehaviour
 
         yield return new WaitForSeconds(dispatchDuration);         // alien sits in the beam
         if (beam != null) beam.SetActive(false);                   // beam off
+        SoundManager.Instance?.UvLightOff();
 
         // Alien fades out where it dropped, then a random crew member is possessed
         if (alien != null)

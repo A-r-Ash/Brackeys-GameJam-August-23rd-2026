@@ -15,6 +15,7 @@ public class Bonfire : MonoBehaviour
     [SerializeField] private float baseIntensity = 1f;
     [SerializeField] private float pulseAmount = 0.3f;   // how far it swings
     [SerializeField] private float pulseSpeed = 3f;      // how fast it pulses
+    [SerializeField] private AudioSource fireSource;     // looping fire crackle (plays at night)
 
     public float CurrentFuel => currentFuel;
     public float MaxFuel => maxFuel;
@@ -42,12 +43,16 @@ public class Bonfire : MonoBehaviour
                 fireLight.enabled = true;
                 fireLight.intensity = baseIntensity + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;
             }
+
+            if (fireSource != null && !fireSource.isPlaying) fireSource.Play();   // crackle at night
         }
         else
         {
             // Daytime: no drain, light off
             if (fireLight != null)
                 fireLight.enabled = false;
+
+            if (fireSource != null && fireSource.isPlaying) fireSource.Pause();
         }
 
         if (fuelSlider != null)

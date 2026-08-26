@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 71942363c5608a64bb62421349d39c9c, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0, g: 0.92168844, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.92156863, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -201,9 +201,9 @@ MonoBehaviour:
   beamBottom: {fileID: 181290999013067178}
   alienPrefab: {fileID: 2622349046476279431, guid: 6fcef9dc6872b0249a605daa196003f2, type: 3}
   flySpeed: 3
-  alienSpeed: 0.2
   beamDuration: 1
   dispatchDuration: 1
+  fadeDuration: 1
   stayDuration: 0.5
 --- !u!1 &2755201653027724057
 GameObject:

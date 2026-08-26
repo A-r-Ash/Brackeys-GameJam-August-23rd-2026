@@ -21,12 +21,15 @@ public class PlayerInteract : MonoBehaviour
             {
                 nearbyFire.AddFuel(carriedWood * fuelPerWood);
                 carriedWood = 0;
+                SoundManager.Instance?.Burn();                  // feeding the fire
             }
             else if (nearbyPile != null)                        // at pile → grab wood
             {
                 if (carriedWood < carryCapacity)
                 {
-                    carriedWood += nearbyPile.TakeWood(1);
+                    int taken = nearbyPile.TakeWood(1);
+                    carriedWood += taken;
+                    if (taken > 0) SoundManager.Instance?.WoodGather();   // picked up wood
                 }
             }
         }

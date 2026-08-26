@@ -51,16 +51,18 @@ MonoBehaviour:
   pile: {fileID: 0}
   cycle: {fileID: 0}
   stateText: {fileID: 8939359108264728906}
-  moveSpeed: 0.25
+  moveSpeed: 1
   wallLayer:
     serializedVersion: 2
     m_Bits: 64
   gatherTime: 2
   woodPerTrip: 1
-  wanderSize: {x: 3, y: 1.7}
+  stuckTime: 0.5
+  wanderSize: {x: 1.5, y: 1}
   isImpostor: 0
   sabotageInterval: 6
   stealAmount: 3
+  stealDuration: 2
 --- !u!61 &1452266031924976271
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -122,6 +124,8 @@ MonoBehaviour:
   animator: {fileID: 3581170730774771888}
   sprite: {fileID: 5623965818269415261}
   moveThreshold: 0.01
+  stopDelay: 0.1
+  walkSource: {fileID: 0}
 --- !u!1 &5253011892359203328
 GameObject:
   m_ObjectHideFlags: 0

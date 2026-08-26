@@ -55,6 +55,7 @@ public class PlayerAccuse : MonoBehaviour
         else
             Debug.Log("Wrong! " + npc.name + " was innocent — you lost a crew member.");
 
+        SoundManager.Instance?.MetalHit();   // the exile blow
         Destroy(npc.gameObject);
     }
 
