@@ -16,6 +16,12 @@ public class Bonfire : MonoBehaviour
     [SerializeField] private float pulseAmount = 0.3f;   // how far it swings
     [SerializeField] private float pulseSpeed = 3f;      // how fast it pulses
     [SerializeField] private AudioSource fireSource;     // looping fire crackle (plays at night)
+    [SerializeField] private ParticleSystem feedEffect;  // burst when wood is added
+
+    [Header("Fire sprite")]
+    [SerializeField] private Animator fireAnimator;      // the lit-fire animation
+    [SerializeField] private SpriteRenderer fireSprite;
+    [SerializeField] private Sprite deadSprite;          // shown by day (fire is out)
 
     public float CurrentFuel => currentFuel;
     public float MaxFuel => maxFuel;
@@ -34,7 +40,7 @@ public class Bonfire : MonoBehaviour
             if (currentFuel <= 0f)
             {
                 currentFuel = 0f;
-                Debug.Log("The fire went out! Game Over.");
+                GameStateManager.Instance?.Lose();   // fire out → game over
             }
 
             // Pulse the light at night
@@ -45,14 +51,20 @@ public class Bonfire : MonoBehaviour
             }
 
             if (fireSource != null && !fireSource.isPlaying) fireSource.Play();   // crackle at night
+
+            if (fireAnimator != null) fireAnimator.enabled = true;               // animate the flames
         }
         else
         {
-            // Daytime: no drain, light off
+            // Daytime: no drain, light off, fire is dead
             if (fireLight != null)
                 fireLight.enabled = false;
 
             if (fireSource != null && fireSource.isPlaying) fireSource.Pause();
+
+            if (fireAnimator != null) fireAnimator.enabled = false;              // stop the animation
+            if (fireSprite != null && deadSprite != null)
+                fireSprite.sprite = deadSprite;                                   // show the dead-fire sprite
         }
 
         if (fuelSlider != null)
@@ -62,5 +74,6 @@ public class Bonfire : MonoBehaviour
     public void AddFuel(float amount)
     {
         currentFuel = Mathf.Min(currentFuel + amount, maxFuel);
+        if (feedEffect != null) feedEffect.Play();   // spark burst when fed
     }
 }

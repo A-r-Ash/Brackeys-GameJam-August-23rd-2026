@@ -22,6 +22,7 @@ public class DayNightCycle : MonoBehaviour
     public bool IsNight => currentPhase == Phase.Night;
 
     public float PhaseTimeRemaining => (IsNight ? nightDuration : dayDuration) - timer;
+    public float PhaseProgress => Mathf.Clamp01(timer / (IsNight ? nightDuration : dayDuration));  // 0→1 through the phase
 
     void Start()
     {

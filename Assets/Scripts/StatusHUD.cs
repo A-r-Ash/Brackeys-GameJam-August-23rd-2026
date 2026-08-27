@@ -6,6 +6,7 @@ public class StatusHUD : MonoBehaviour
 {
     [SerializeField] private DayNightCycle cycle;
     [SerializeField] private WoodPile pile;
+    [SerializeField] private FoodPile foodPile;
     [SerializeField] private Bonfire bonfire;
     [SerializeField] private TMP_Text statusText;
 
@@ -20,6 +21,7 @@ public class StatusHUD : MonoBehaviour
             $"Crew: {NPCGatherer.Count}\n" +
             $"Imposter: {CountImpostors()}\n" +
             $"Wood: {pile.Count}\n" +
+            $"Food: {(foodPile != null ? foodPile.Count : 0)}\n" +
             $"Fire: {Mathf.CeilToInt(bonfire.CurrentFuel)} / {Mathf.CeilToInt(bonfire.MaxFuel)}";
     }
 

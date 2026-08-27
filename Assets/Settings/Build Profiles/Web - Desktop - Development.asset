@@ -36,8 +36,9 @@ MonoBehaviour:
     - line: '|   useOnDemandResources: 0'
     - line: '|   accelerometerFrequency: 60'
     - line: '|   companyName: Arash Studio'
-    - line: '|   productName: Th False Fire (Brackeys Jam aug 2026)'
-    - line: '|   defaultCursor: {instanceID: 0}'
+    - line: '|   productName: Th False Fire'
+    - line: '|   defaultCursor: {fileID: 2800000, guid: 9111a97dcd558e54aa621b27a3f1ff76,
+        type: 3}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
         0.1254902, a: 1}'
@@ -167,7 +168,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 1.02'
+    - line: '|   bundleVersion: 1.04'
     - line: '|   preloadedAssets: []'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'

@@ -484,6 +484,9 @@ GameObject:
   - component: {fileID: 3011606803233074064}
   - component: {fileID: 3329708232541094596}
   - component: {fileID: 5213030963248365488}
+  - component: {fileID: 8195964151980085093}
+  - component: {fileID: 2474928947901005793}
+  - component: {fileID: 8148341928588779631}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -595,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 1
+  joystick: {fileID: 0}
 --- !u!114 &3011606803233074064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,9 +627,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f293ec04944394245a968651da7ff340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAccuse
-  accuseRadius: 1.5
   accuseKey: 102
-  selector: {fileID: 3116263846064155254, guid: 01ebabdd616c99a49891923ad72a9f6d, type: 3}
+  selector: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!114 &5213030963248365488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,11 +642,130 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74083dde0d571643bd5ac6d83ba437a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WalkAnimator
-  animator: {fileID: 0}
+  animator: {fileID: 4497794414432863947}
   sprite: {fileID: 5733992448693988417}
   moveThreshold: 0.01
   stopDelay: 0.1
-  walkSource: {fileID: 0}
+  walkSource: {fileID: 8195964151980085093}
+--- !u!82 &8195964151980085093
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998552149826525704}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 7c4efffd6ec8ca3409bed7a6ea33eea0, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!81 &2474928947901005793
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998552149826525704}
+  m_Enabled: 1
+--- !u!114 &8148341928588779631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998552149826525704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f623379577f2ba4496b36b312a6b86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTorch
+  cycle: {fileID: 0}
+  torch: {fileID: 2531860370263420325}
 --- !u!1 &5353790790971947556
 GameObject:
   m_ObjectHideFlags: 0
