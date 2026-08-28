@@ -1,33 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class StatusHUD : MonoBehaviour
 {
+    [Header("Sources")]
     [SerializeField] private DayNightCycle cycle;
     [SerializeField] private WoodPile pile;
     [SerializeField] private FoodPile foodPile;
     [SerializeField] private Bonfire bonfire;
-    [SerializeField] private TMP_Text statusText;
+
+    [Header("Value texts (next to each icon)")]
+    [SerializeField] private TMP_Text dayText;
+    [SerializeField] private TMP_Text npcText;
+    [SerializeField] private TMP_Text impostorText;
+    [SerializeField] private TMP_Text woodText;
+    [SerializeField] private TMP_Text foodText;
+    [SerializeField] private TMP_Text fireText;
+
+    [Header("Day/night icon (swaps sprite)")]
+    [SerializeField] private Image dayNightIcon;
+    [SerializeField] private Sprite daySprite;
+    [SerializeField] private Sprite nightSprite;
 
     void Update()
     {
-        string phase = cycle.IsNight ? "Night" : "Day";
-        int timeLeft = Mathf.CeilToInt(cycle.PhaseTimeRemaining);
+        if (cycle != null)
+        {
+            if (dayText != null) dayText.text = "Day " + cycle.DayNumber;
+            if (dayNightIcon != null && daySprite != null && nightSprite != null)
+                dayNightIcon.sprite = cycle.IsNight ? nightSprite : daySprite;
+        }
 
-        statusText.text =
-            $"Day {cycle.DayNumber}\n" +
-            $"{phase} ({timeLeft}s)\n" +
-            $"Crew: {NPCGatherer.Count}\n" +
-            $"Imposter: {CountImpostors()}\n" +
-            $"Wood: {pile.Count}\n" +
-            $"Food: {(foodPile != null ? foodPile.Count : 0)}\n" +
-            $"Fire: {Mathf.CeilToInt(bonfire.CurrentFuel)} / {Mathf.CeilToInt(bonfire.MaxFuel)}";
+        if (npcText != null)      npcText.text = NPCGatherer.Count.ToString();
+        if (impostorText != null) impostorText.text = CountImpostors().ToString();
+        if (pile != null && woodText != null)     woodText.text = pile.Count.ToString();
+        if (foodPile != null && foodText != null) foodText.text = foodPile.Count.ToString();
+        if (bonfire != null && fireText != null)  fireText.text = Mathf.CeilToInt(bonfire.CurrentFuel).ToString();
     }
 
     int CountImpostors()
     {
-        // Gather every NPC, then count the ones flagged as impostors
         List<NPCGatherer> npcs = new List<NPCGatherer>(FindObjectsByType<NPCGatherer>(FindObjectsSortMode.None));
 
         int count = 0;
