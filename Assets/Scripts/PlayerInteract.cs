@@ -21,6 +21,7 @@ public class PlayerInteract : MonoBehaviour
     private WreckedShip nearbyShip;
 
     public int CarriedWood => carriedWood;
+    public int CarriedFood => carriedFood;
 
     void Update()
     {
@@ -43,7 +44,8 @@ public class PlayerInteract : MonoBehaviour
     {
         if (nearbyRecruit != null)                                 // at recruit point → spend food, add crew
         {
-            nearbyRecruit.TryRecruit();
+            if (nearbyRecruit.TryRecruit())
+                SoundManager.Instance?.Recruit(transform.position);
         }
         else if (nearbyFire != null && carriedWood > 0)            // at fire → dump wood in
         {
@@ -61,7 +63,7 @@ public class PlayerInteract : MonoBehaviour
         {
             nearbyFoodPile.AddFood(carriedFood);
             carriedFood = 0;
-            SoundManager.Instance?.WoodPut(transform.position);    // placeholder until a food-drop sfx exists
+            SoundManager.Instance?.FoodDrop(transform.position);
         }
         else if (nearbyPile != null && carriedWood < carryCapacity) // at wood pile → grab wood
         {
@@ -73,7 +75,7 @@ public class PlayerInteract : MonoBehaviour
         {
             int picked = nearbyBush.Pick(1);
             carriedFood += picked;
-            if (picked > 0) SoundManager.Instance?.WoodGather(transform.position);   // placeholder pick sfx
+            if (picked > 0) SoundManager.Instance?.BerryPick(transform.position);
         }
     }
 

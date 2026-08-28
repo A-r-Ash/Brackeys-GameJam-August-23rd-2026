@@ -25,6 +25,7 @@ public class Bonfire : MonoBehaviour
 
     public float CurrentFuel => currentFuel;
     public float MaxFuel => maxFuel;
+    public int TimesFed { get; private set; }
 
     void Start()
     {
@@ -74,6 +75,7 @@ public class Bonfire : MonoBehaviour
     public void AddFuel(float amount)
     {
         currentFuel = Mathf.Min(currentFuel + amount, maxFuel);
+        TimesFed++;
         if (feedEffect != null) feedEffect.Play();   // spark burst when fed
     }
 }

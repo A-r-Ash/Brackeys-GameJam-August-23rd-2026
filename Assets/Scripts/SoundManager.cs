@@ -8,6 +8,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip woodCut;
     [SerializeField] private AudioClip woodPut;
     [SerializeField] private AudioClip woodGather;
+    [SerializeField] private AudioClip berryPick;
+    [SerializeField] private AudioClip foodDrop;
+    [SerializeField] private AudioClip recruit;
     [SerializeField] private AudioClip burn;
     [SerializeField] private AudioClip uvLightOn;
     [SerializeField] private AudioClip uvLightOff;
@@ -45,6 +48,9 @@ public class SoundManager : MonoBehaviour
     public void WoodCut(Vector3 p)     => PlayAt(woodCut, p);
     public void WoodPut(Vector3 p)     => PlayAt(woodPut, p);
     public void WoodGather(Vector3 p)  => PlayAt(woodGather, p);
+    public void BerryPick(Vector3 p)   => PlayAt(berryPick, p);
+    public void FoodDrop(Vector3 p)    => PlayAt(foodDrop, p);
+    public void Recruit(Vector3 p)     => PlayAt(recruit, p);
     public void Burn(Vector3 p)        => PlayAt(burn, p);
     public void UvLightOn(Vector3 p)   => PlayAt(uvLightOn, p);
     public void UvLightOff(Vector3 p)  => PlayAt(uvLightOff, p);

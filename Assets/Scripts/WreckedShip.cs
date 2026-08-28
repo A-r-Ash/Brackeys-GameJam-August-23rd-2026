@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 // The escape goal: deposit wood until it's fixed, then you win.
 public class WreckedShip : MonoBehaviour
 {
     [SerializeField] private int woodNeeded = 500;
     [SerializeField] private int woodDeposited = 0;
-    [SerializeField] private Image progressBar;   // optional fill bar (0..1)
+    [SerializeField] private TMP_Text progressText;   // shows "X / 500"
 
     public int WoodNeeded => woodNeeded;
     public int WoodDeposited => woodDeposited;
@@ -15,7 +15,7 @@ public class WreckedShip : MonoBehaviour
 
     void Start()
     {
-        if (progressBar != null) progressBar.fillAmount = Progress;
+        UpdateText();
     }
 
     // Player deposits carried wood here
@@ -24,9 +24,15 @@ public class WreckedShip : MonoBehaviour
         if (IsFixed) return;
 
         woodDeposited = Mathf.Min(woodDeposited + amount, woodNeeded);
-        if (progressBar != null) progressBar.fillAmount = Progress;
+        UpdateText();
 
         if (IsFixed)
             GameStateManager.Instance?.Win();   // ship fixed → escape!
+    }
+
+    void UpdateText()
+    {
+        if (progressText != null)
+            progressText.text = woodDeposited + " / " + woodNeeded;
     }
 }

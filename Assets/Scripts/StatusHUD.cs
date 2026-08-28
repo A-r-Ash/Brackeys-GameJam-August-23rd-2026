@@ -13,6 +13,7 @@ public class StatusHUD : MonoBehaviour
 
     [Header("Value texts (next to each icon)")]
     [SerializeField] private TMP_Text dayText;
+    [SerializeField] private TMP_Text timerText;   // countdown to next phase, by the day/night icon
     [SerializeField] private TMP_Text npcText;
     [SerializeField] private TMP_Text impostorText;
     [SerializeField] private TMP_Text woodText;
@@ -31,6 +32,8 @@ public class StatusHUD : MonoBehaviour
             if (dayText != null) dayText.text = "Day " + cycle.DayNumber;
             if (dayNightIcon != null && daySprite != null && nightSprite != null)
                 dayNightIcon.sprite = cycle.IsNight ? nightSprite : daySprite;
+            if (timerText != null)
+                timerText.text = cycle.IsPaused ? "" : Mathf.CeilToInt(cycle.PhaseTimeRemaining) + "s";
         }
 
         if (npcText != null)      npcText.text = NPCGatherer.Count.ToString();

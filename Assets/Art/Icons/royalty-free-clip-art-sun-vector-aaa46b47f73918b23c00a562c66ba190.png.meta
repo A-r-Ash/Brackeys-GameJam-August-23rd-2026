@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: 8c08d1a648256b043b353331787666c3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1693579756451892249
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_0
+  - first:
+      213: 8468260299420439124
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_1
+  - first:
+      213: -1474488440058914918
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_2
+  - first:
+      213: 1492898795835249074
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_3
+  - first:
+      213: 4960670148200641611
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_4
+  - first:
+      213: 8456784079939955490
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_5
+  - first:
+      213: -6249170072336634994
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_6
+  - first:
+      213: 4976876612100616888
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_7
+  - first:
+      213: 6029081327756742197
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_8
+  - first:
+      213: -6817004751808595924
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_9
+  - first:
+      213: 5764508760340238314
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_10
+  - first:
+      213: 5971066858032156119
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_11
+  - first:
+      213: -719288834703867328
+    second: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: VisionOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_0
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 370
+        width: 87
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e374e93f223f78e0800000000000000
+      internalID: -1693579756451892249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_1
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 390
+        width: 60
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4529f7420ed458570800000000000000
+      internalID: 8468260299420439124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_2
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 358
+        width: 59
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a975ed07390998be0800000000000000
+      internalID: -1474488440058914918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_3
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 316
+        width: 106
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b15e5b8b87d7b410800000000000000
+      internalID: 1492898795835249074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_4
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 127
+        width: 257
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b44326f8737d7d440800000000000000
+      internalID: 4960670148200641611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_5
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 297
+        width: 93
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22beff290588c5570800000000000000
+      internalID: 8456784079939955490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_6
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 233
+        width: 101
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b6f51cdec7649a0800000000000000
+      internalID: -6249170072336634994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_7
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 219
+        width: 103
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b2f43bf8ea611540800000000000000
+      internalID: 4976876612100616888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_8
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 128
+        width: 85
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53e81ee26899ba350800000000000000
+      internalID: 6029081327756742197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_9
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 47
+        width: 55
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c287c48db422561a0800000000000000
+      internalID: -6817004751808595924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_10
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 53
+        width: 87
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aef05b40d26afff40800000000000000
+      internalID: 5764508760340238314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_11
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 139
+        width: 107
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dd4d1bdbad7dd250800000000000000
+      internalID: 5971066858032156119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_12
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 18
+        width: 60
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0424294ad929406f0800000000000000
+      internalID: -719288834703867328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_0: -1693579756451892249
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_1: 8468260299420439124
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_10: 5764508760340238314
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_11: 5971066858032156119
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_12: -719288834703867328
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_2: -1474488440058914918
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_3: 1492898795835249074
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_4: 4960670148200641611
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_5: 8456784079939955490
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_6: -6249170072336634994
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_7: 4976876612100616888
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_8: 6029081327756742197
+      royalty-free-clip-art-sun-vector-aaa46b47f73918b23c00a562c66ba190_9: -6817004751808595924
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

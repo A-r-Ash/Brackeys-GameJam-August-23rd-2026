@@ -5,6 +5,8 @@ public class BerryBush : MonoBehaviour
 {
     [SerializeField] private int maxBerries = 5;
     [SerializeField] private float regrowTime = 8f;   // hidden time before reappearing elsewhere
+    [SerializeField] private float clearance = 0.6f;  // required empty radius around a spawn spot
+    [SerializeField] private int maxTries = 25;       // attempts to find a clear spot
 
     private int berries;
     private float hideTimer;
@@ -61,9 +63,26 @@ public class BerryBush : MonoBehaviour
     void Relocate()
     {
         if (!hasZone) return;
-        float x = Random.Range(-zoneSize.x * 0.5f, zoneSize.x * 0.5f);
-        float y = Random.Range(-zoneSize.y * 0.5f, zoneSize.y * 0.5f);
-        transform.position = zoneCenter + new Vector3(x, y, 0f);
+
+        Vector3 candidate = transform.position;
+        for (int i = 0; i < maxTries; i++)
+        {
+            float x = Random.Range(-zoneSize.x * 0.5f, zoneSize.x * 0.5f);
+            float y = Random.Range(-zoneSize.y * 0.5f, zoneSize.y * 0.5f);
+            candidate = zoneCenter + new Vector3(x, y, 0f);
+
+            if (IsClear(candidate)) break;   // found an empty spot
+        }
+        transform.position = candidate;      // clear spot, or the last try if none found
+    }
+
+    // No other collider within the clearance radius (ignores this bush's own collider)
+    bool IsClear(Vector3 pos)
+    {
+        foreach (Collider2D c in Physics2D.OverlapCircleAll(pos, clearance))
+            if (c.gameObject != gameObject)
+                return false;
+        return true;
     }
 
     void SetVisible(bool v)

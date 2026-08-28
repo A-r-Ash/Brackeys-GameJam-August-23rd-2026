@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerAccuse : MonoBehaviour
 {
-    [SerializeField] private KeyCode accuseKey = KeyCode.F;
     [SerializeField] private SpriteRenderer selector;   // glow marker
     [SerializeField] private Camera cam;                // defaults to Camera.main
 
@@ -19,7 +21,26 @@ public class PlayerAccuse : MonoBehaviour
         target = NpcUnderMouse();
         UpdateSelector();
 
-        if (Input.GetKeyDown(accuseKey)) DoAccuse();
+        // Left-click to eliminate (ignore clicks that land on an actual button)
+        if (Input.GetMouseButtonDown(0) && !IsPointerOverButton())
+            DoAccuse();
+    }
+
+    // True only if the cursor is over a real UI control (Button/Toggle/etc.),
+    // not just any full-screen panel or text with Raycast Target on.
+    bool IsPointerOverButton()
+    {
+        if (EventSystem.current == null) return false;
+
+        PointerEventData data = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(data, results);
+
+        foreach (RaycastResult r in results)
+            if (r.gameObject.GetComponentInParent<Selectable>() != null)
+                return true;
+
+        return false;
     }
 
     // The NPC the mouse cursor is currently over (null if none)
@@ -32,8 +53,10 @@ public class PlayerAccuse : MonoBehaviour
         Vector2 world = cam.ScreenToWorldPoint(screen);
 
         foreach (Collider2D h in Physics2D.OverlapPointAll(world))
-            if (h.TryGetComponent(out NPCGatherer npc))
-                return npc;
+        {
+            NPCGatherer npc = h.GetComponentInParent<NPCGatherer>();
+            if (npc != null) return npc;
+        }
 
         return null;
     }

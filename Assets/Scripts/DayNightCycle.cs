@@ -12,6 +12,7 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private int dayNumber = 1;
 
     private float timer;
+    private bool paused;
 
     // Other systems subscribe to these
     public event Action OnDayStart;
@@ -31,8 +32,25 @@ public class DayNightCycle : MonoBehaviour
         OnDayStart?.Invoke();
     }
 
+    public bool IsPaused => paused;
+    public void SetPaused(bool p) { paused = p; }
+
+    // Jump straight to night (used by the tutorial); also unpauses
+    public void ForceNight()
+    {
+        paused = false;
+        timer = 0f;
+        if (currentPhase == Phase.Day)
+        {
+            currentPhase = Phase.Night;
+            OnNightStart?.Invoke();
+        }
+    }
+
     void Update()
     {
+        if (paused) return;   // held (e.g. tutorial keeps it daytime)
+
         timer += Time.deltaTime;
         float duration = IsNight ? nightDuration : dayDuration;
 
