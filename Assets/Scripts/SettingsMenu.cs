@@ -12,8 +12,8 @@ public class SettingsMenu : MonoBehaviour
 
     void Start()
     {
-        float music = PlayerPrefs.GetFloat("MusicVol", 1f);
-        float sfx   = PlayerPrefs.GetFloat("SFXVol", 1f);
+        float music = PlayerPrefs.GetFloat(GameConstants.MusicVolKey, 1f);
+        float sfx   = PlayerPrefs.GetFloat(GameConstants.SfxVolKey, 1f);
 
         ApplyMusic(music);
         ApplySfx(sfx);
@@ -24,11 +24,11 @@ public class SettingsMenu : MonoBehaviour
         if (settingsPanel != null) settingsPanel.SetActive(false);
     }
 
-    public void SetMusic(float v) { ApplyMusic(v); PlayerPrefs.SetFloat("MusicVol", v); }
-    public void SetSfx(float v)   { ApplySfx(v);   PlayerPrefs.SetFloat("SFXVol", v); }
+    public void SetMusic(float v) { ApplyMusic(v); PlayerPrefs.SetFloat(GameConstants.MusicVolKey, v); }
+    public void SetSfx(float v)   { ApplySfx(v);   PlayerPrefs.SetFloat(GameConstants.SfxVolKey, v); }
 
-    void ApplyMusic(float v) { if (mixer != null) mixer.SetFloat("MusicVol", ToDb(v)); }
-    void ApplySfx(float v)   { if (mixer != null) mixer.SetFloat("SFXVol", ToDb(v)); }
+    void ApplyMusic(float v) { if (mixer != null) mixer.SetFloat(GameConstants.MusicParam, ToDb(v)); }
+    void ApplySfx(float v)   { if (mixer != null) mixer.SetFloat(GameConstants.SfxParam, ToDb(v)); }
 
     // slider 0..1 → decibels (0 = silent/-80dB, 1 = 0dB)
     float ToDb(float v) => Mathf.Log10(Mathf.Max(v, 0.0001f)) * 20f;

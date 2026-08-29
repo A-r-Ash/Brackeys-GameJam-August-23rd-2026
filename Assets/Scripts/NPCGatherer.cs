@@ -35,12 +35,18 @@ public class NPCGatherer : MonoBehaviour
     [SerializeField] private GameObject impostorDeathVfx;
 
     public static int Count { get; private set; }
+    public static int ImpostorCount { get; private set; }
 
     public enum State { GoingToGather, Gathering, ReturningToPile, NightDepositWood, GoToBonfire, Wandering, Stealing, StealingAtPile }
     private State state = State.GoingToGather;
     public State CurrentState => state;
     public bool IsImpostor => isImpostor;
-    public void SetImpostor(bool value) { isImpostor = value; }
+    public void SetImpostor(bool value)
+    {
+        if (isImpostor == value) return;
+        isImpostor = value;
+        if (isActiveAndEnabled) ImpostorCount += value ? 1 : -1;
+    }
 
     public void Die()
     {
@@ -60,8 +66,17 @@ public class NPCGatherer : MonoBehaviour
     private bool carryingWood;
     private bool wasNight;
 
-    void OnEnable()  { Count++; }
-    void OnDisable() { Count--; }
+    void OnEnable()
+    {
+        Count++;
+        if (isImpostor) ImpostorCount++;
+    }
+
+    void OnDisable()
+    {
+        Count--;
+        if (isImpostor) ImpostorCount--;
+    }
 
     void Awake()
     {

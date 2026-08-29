@@ -4,9 +4,9 @@ using TMPro;
 // The escape goal: deposit wood until it's fixed, then you win.
 public class WreckedShip : MonoBehaviour
 {
-    [SerializeField] private int woodNeeded = 500;
+    [SerializeField] private int woodNeeded = 300;
     [SerializeField] private int woodDeposited = 0;
-    [SerializeField] private TMP_Text progressText;   // shows "X / 500"
+    [SerializeField] private TMP_Text progressText;   // shows "X / 300"
 
     public int WoodNeeded => woodNeeded;
     public int WoodDeposited => woodDeposited;

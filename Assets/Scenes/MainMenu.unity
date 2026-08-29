@@ -1182,9 +1182,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SettingsMenu
   settingsPanel: {fileID: 699372271}
   hideWhileOpen: {fileID: 0}
-  mixer: {fileID: 0}
-  musicSlider: {fileID: 0}
-  sfxSlider: {fileID: 0}
+  mixer: {fileID: 24100000, guid: ced9cbddeab11ab45be3919a60e2de8f, type: 2}
+  musicSlider: {fileID: 807718882}
+  sfxSlider: {fileID: 947059610}
 --- !u!1 &933628706
 GameObject:
   m_ObjectHideFlags: 0

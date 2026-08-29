@@ -4535,7 +4535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6787ab053eb8556419d66a9a5812c351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WreckedShip
-  woodNeeded: 500
+  woodNeeded: 100
   woodDeposited: 0
   progressText: {fileID: 1999220448}
 --- !u!4 &1019647700
@@ -48336,6 +48336,7 @@ MonoBehaviour:
   losePanel: {fileID: 1755584322}
   winPanel: {fileID: 0}
   scoreText: {fileID: 1325608952}
+  headline: {fileID: 1677381869}
   mainMenuScene: MainMenu
 --- !u!4 &1280465646
 Transform:
@@ -50131,10 +50132,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1780209958}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: SetMusic
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -51044,6 +51045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1780209956}
   - component: {fileID: 1780209957}
+  - component: {fileID: 1780209958}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -51081,6 +51083,23 @@ MonoBehaviour:
   pausePanel: {fileID: 132389834}
   mainMenuScene: MainMenu
   pauseKey: 27
+--- !u!114 &1780209958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780209955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b390193cc80bde74c829a9d8cb408fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsMenu
+  settingsPanel: {fileID: 0}
+  hideWhileOpen: {fileID: 0}
+  mixer: {fileID: 24100000, guid: ced9cbddeab11ab45be3919a60e2de8f, type: 2}
+  musicSlider: {fileID: 1564732600}
+  sfxSlider: {fileID: 1820580397}
 --- !u!1 &1793166100
 GameObject:
   m_ObjectHideFlags: 0
@@ -51512,9 +51531,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1364209874}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: set_volume
+      - m_Target: {fileID: 1780209958}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: SetSfx
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -78314,8 +78333,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 340417555}
     - target: {fileID: 1431745161003957088, guid: 3c130a766f6e10d4683203a54df6630f, type: 3}
-      propertyPath: drainPerSecond
+      propertyPath: baseIntensity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1431745161003957088, guid: 3c130a766f6e10d4683203a54df6630f, type: 3}
+      propertyPath: drainPerSecond
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1732151987303779897, guid: 3c130a766f6e10d4683203a54df6630f, type: 3}
       propertyPath: MaxDistance

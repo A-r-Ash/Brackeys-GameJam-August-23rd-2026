@@ -190,7 +190,7 @@ public class TutorialManager : MonoBehaviour
 
         switch (step)
         {
-            case Step.Move:         promptText.text = "Use W A S D to move around"; break;
+            case Step.Move:         promptText.text = "Use W A S D to move around. You're stranded on an alien planet — and one of your crew is secretly a THIEF. Find out who!"; break;
             case Step.CollectBerry: promptText.text = "Find a berry bush and press E to pick a berry"; break;
             case Step.DepositFood:  promptText.text = "Carry the food to the food pile and press E to drop it in"; break;
             case Step.Recruit:      promptText.text = "Go to the totem and press E to recruit a helper (costs food)"; break;

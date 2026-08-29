@@ -9,7 +9,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private DayNightCycle cycle;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
-    [SerializeField] private TMP_Text scoreText;   // shows days survived + best (on the lose panel)
+    [SerializeField] private TMP_Text scoreText;   // shows days survived + best (on the end panel)
+    [SerializeField] private TMP_Text headline;    // optional: the "Fire went out"/"Ship repaired!" heading
     [SerializeField] private string mainMenuScene = "MainMenu";
 
     private bool gameOver;
@@ -29,7 +30,15 @@ public class GameStateManager : MonoBehaviour
         if (gameOver) return;
         gameOver = true;
 
-        if (winPanel != null) winPanel.SetActive(true);
+        int days = cycle != null ? cycle.DayNumber : 0;
+        int best = UpdateBestDays(days);
+
+        if (headline != null) headline.text = "Ship repaired!";
+        if (scoreText != null)
+            scoreText.text = $"You escaped after {days} days\nBest: {best}";
+
+        GameObject panel = winPanel != null ? winPanel : losePanel;
+        if (panel != null) panel.SetActive(true);
         Time.timeScale = 0f;
     }
 
@@ -40,18 +49,26 @@ public class GameStateManager : MonoBehaviour
         gameOver = true;
 
         int days = cycle != null ? cycle.DayNumber : 0;
-        int best = PlayerPrefs.GetInt("BestDays", 0);
-        if (days > best)
-        {
-            best = days;
-            PlayerPrefs.SetInt("BestDays", best);
-        }
+        int best = UpdateBestDays(days);
 
+        if (headline != null) headline.text = "Fire went out";
         if (scoreText != null)
             scoreText.text = $"You survived {days} days\nBest: {best}";
 
         if (losePanel != null) losePanel.SetActive(true);
         Time.timeScale = 0f;                  // freeze
+    }
+
+    int UpdateBestDays(int days)
+    {
+        int best = PlayerPrefs.GetInt(GameConstants.BestDaysKey, 0);
+        if (days > best)
+        {
+            best = days;
+            PlayerPrefs.SetInt(GameConstants.BestDaysKey, best);
+        }
+
+        return best;
     }
 
     // Hook this to the "Restart" button

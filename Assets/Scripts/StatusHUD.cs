@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -37,21 +36,9 @@ public class StatusHUD : MonoBehaviour
         }
 
         if (npcText != null)      npcText.text = NPCGatherer.Count.ToString();
-        if (impostorText != null) impostorText.text = CountImpostors().ToString();
+        if (impostorText != null) impostorText.text = NPCGatherer.ImpostorCount.ToString();
         if (pile != null && woodText != null)     woodText.text = pile.Count.ToString();
         if (foodPile != null && foodText != null) foodText.text = foodPile.Count.ToString();
         if (bonfire != null && fireText != null)  fireText.text = Mathf.CeilToInt(bonfire.CurrentFuel).ToString();
-    }
-
-    int CountImpostors()
-    {
-        List<NPCGatherer> npcs = new List<NPCGatherer>(FindObjectsByType<NPCGatherer>(FindObjectsSortMode.None));
-
-        int count = 0;
-        foreach (NPCGatherer npc in npcs)
-            if (npc.IsImpostor)
-                count++;
-
-        return count;
     }
 }
