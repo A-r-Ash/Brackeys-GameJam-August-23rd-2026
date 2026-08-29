@@ -10,6 +10,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private TMP_Text scoreText;   // shows days survived + best (on the lose panel)
+    [SerializeField] private string mainMenuScene = "MainMenu";
 
     private bool gameOver;
 
@@ -58,5 +59,12 @@ public class GameStateManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Hook to a "Main Menu" button on the win/lose panels
+    public void ToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuScene);
     }
 }

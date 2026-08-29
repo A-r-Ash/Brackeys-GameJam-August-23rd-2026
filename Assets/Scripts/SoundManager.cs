@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+    [SerializeField] private AudioMixerGroup sfxGroup;   // route one-shots so the SFX slider controls them
     public static SoundManager Instance { get; private set; }
 
     [Header("One-shot clips")]
@@ -35,6 +37,7 @@ public class SoundManager : MonoBehaviour
         AudioSource s = go.AddComponent<AudioSource>();
         s.clip = clip;
         s.volume = volume;
+        s.outputAudioMixerGroup = sfxGroup;
         s.spatialBlend = 1f;                    // fully 3D → distance-based
         s.dopplerLevel = 0f;
         s.rolloffMode = AudioRolloffMode.Linear;
