@@ -17,6 +17,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private DayNightCycle cycle;
     [SerializeField] private Bonfire bonfire;
     [SerializeField] private WreckedShip ship;
+    [SerializeField] private Collider2D trapSpot;   // the TrapZone's trigger collider — arrow points at it AND it's the placement zone
     [SerializeField] private int recruitCost = 3;
 
     [Header("Highlight arrow")]
@@ -27,10 +28,11 @@ public class TutorialManager : MonoBehaviour
 
     private enum Step
     {
-        Move,
         CollectBerry,
         DepositFood,
         Recruit,
+        BuildTrap,
+        WatchDinoTrapped,
         WatchGather,
         GrabWood,
         FeedFire,
@@ -40,11 +42,12 @@ public class TutorialManager : MonoBehaviour
         Done
     }
 
-    private Step step = Step.Move;
+    private Step step = Step.CollectBerry;
     private int npcBaseline;
     private int woodBaseline;
     private int fedBaseline;
-    private bool wDone, aDone, sDone, dDone;
+    private int trapsBaseline;
+    private int dinoBaseline;
 
     [SerializeField] private float alienIntroDuration = 10f;   // how long the alien warning stays up
     private float alienTimer;
@@ -59,14 +62,6 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
-        if (step == Step.Move)   // record which movement keys have been pressed
-        {
-            if (Input.GetKey(KeyCode.W)) wDone = true;
-            if (Input.GetKey(KeyCode.A)) aDone = true;
-            if (Input.GetKey(KeyCode.S)) sDone = true;
-            if (Input.GetKey(KeyCode.D)) dDone = true;
-        }
-
         // Hold daytime until the crew has stocked at least 1 wood, then flip to night
         if (cycle != null && cycle.IsPaused && woodPile != null && woodPile.Count >= 1)
             cycle.ForceNight();
@@ -113,6 +108,7 @@ public class TutorialManager : MonoBehaviour
             case Step.CollectBerry: return NearestBush();
             case Step.DepositFood:  return foodPile != null ? foodPile.transform : null;
             case Step.Recruit:      return recruitPoint != null ? recruitPoint.transform : null;
+            case Step.BuildTrap:    return trapSpot != null ? trapSpot.transform : null;
             case Step.GrabWood:     return woodPile != null ? woodPile.transform : null;
             case Step.FeedFire:     return bonfire != null ? bonfire.transform : null;
             case Step.RepairShip:   return ship != null ? ship.transform : null;
@@ -157,11 +153,12 @@ public class TutorialManager : MonoBehaviour
     {
         switch (step)
         {
-            case Step.Move:         return wDone && aDone && sDone && dDone;
             case Step.CollectBerry: return player != null && player.CarriedFood > 0;
             case Step.DepositFood:  return foodPile != null && foodPile.Count >= recruitCost;
-            case Step.Recruit:      return NPCGatherer.Count > npcBaseline;
-            case Step.WatchGather:  return woodPile != null && woodPile.Count > woodBaseline;
+            case Step.Recruit:         return NPCGatherer.Count > npcBaseline;
+            case Step.BuildTrap:       return player != null && player.TrapsPlaced > trapsBaseline;
+            case Step.WatchDinoTrapped:return Dinosaur.CaughtCount > dinoBaseline;
+            case Step.WatchGather:     return woodPile != null && woodPile.Count > woodBaseline;
             case Step.GrabWood:     return player != null && player.CarriedWood > 0;
             case Step.FeedFire:     return bonfire != null && bonfire.TimesFed > fedBaseline;
             case Step.RepairShip:     return ship != null && ship.WoodDeposited > 0;
@@ -175,7 +172,18 @@ public class TutorialManager : MonoBehaviour
     {
         // snapshot baselines the moment a step begins so the NEXT step measures a change
         if (step == Step.DepositFood) npcBaseline  = NPCGatherer.Count;
-        if (step == Step.Recruit)     woodBaseline = woodPile != null ? woodPile.Count : 0;
+        if (step == Step.Recruit && player != null)            // entering BuildTrap: gift wood + gate to the spot
+        {
+            player.GiveWood(5);
+            player.SetRequireTrapZone(true);
+            trapsBaseline = player.TrapsPlaced;
+        }
+        if (step == Step.BuildTrap) dinoBaseline = Dinosaur.CaughtCount;   // entering WatchDinoTrapped
+        if (step == Step.WatchDinoTrapped)                                 // entering WatchGather
+        {
+            if (player != null) player.SetRequireTrapZone(false);          // traps free from now on
+            woodBaseline = woodPile != null ? woodPile.Count : 0;
+        }
         if (step == Step.GrabWood)    fedBaseline  = bonfire != null ? bonfire.TimesFed : 0;
         if (step == Step.FeedFire && woodPile != null) woodPile.AddWood(5);   // stock some wood for the ship
         if (step == Step.SurviveToNight) alienTimer = alienIntroDuration;     // alien warning shows on night 2
@@ -190,16 +198,17 @@ public class TutorialManager : MonoBehaviour
 
         switch (step)
         {
-            case Step.Move:         promptText.text = "Use W A S D to move around. You're stranded on an alien planet — and one of your crew is secretly a THIEF. Find out who!"; break;
-            case Step.CollectBerry: promptText.text = "Find a berry bush and press E to pick a berry"; break;
+            case Step.CollectBerry: promptText.text = "You're stranded on an alien planet, and one of your crew is secretly a THIEF. First, find a berry bush and press E to pick a berry"; break;
             case Step.DepositFood:  promptText.text = "Carry the food to the food pile and press E to drop it in"; break;
-            case Step.Recruit:      promptText.text = "Go to the totem and press E to recruit a helper (costs food)"; break;
-            case Step.WatchGather:  promptText.text = "Nice! Your helper gathers wood on its own — watch the wood pile grow"; break;
+            case Step.Recruit:         promptText.text = "Go to the totem and press E to recruit a helper (costs food)"; break;
+            case Step.BuildTrap:       promptText.text = "Follow your helper to the trees. A dino patrols the path! Here's 5 wood. Stand on the marked spot and press T to set a trap"; break;
+            case Step.WatchDinoTrapped:promptText.text = "Now lure the dinosaur onto your trap!"; break;
+            case Step.WatchGather:     promptText.text = "Safe! Your helper gathers wood on its own. Watch the wood pile grow"; break;
             case Step.GrabWood:     promptText.text = "Night is falling! Grab wood from the pile (press E)"; break;
             case Step.FeedFire:     promptText.text = "Take the wood to the bonfire and press E to keep it burning"; break;
-            case Step.RepairShip:     promptText.text = "That shipwreck is your way out — bring wood to it to start repairs"; break;
-            case Step.SurviveToNight: promptText.text = "Repair the ship by day, feed the fire by night. Survive until night falls..."; break;
-            case Step.AlienIntro:     promptText.text = "An alien turned one of your crew into a thief! Hover over an NPC and LEFT-CLICK to eliminate them — you can eliminate ANYONE, so be careful!"; break;
+            case Step.RepairShip:     promptText.text = "That shipwreck is your way out. Bring wood to it to start repairs"; break;
+            case Step.SurviveToNight: promptText.text = "Repair the ship by day, feed the fire by night. Survive until night falls"; break;
+            case Step.AlienIntro:     promptText.text = "An alien turned one of your crew into a thief! Hover over an NPC and LEFT-CLICK to eliminate them. You can eliminate ANYONE, so be careful!"; break;
             case Step.Done:           promptText.text = ""; break;
         }
     }

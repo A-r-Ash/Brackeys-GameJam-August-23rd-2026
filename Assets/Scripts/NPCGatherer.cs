@@ -16,6 +16,7 @@ public class NPCGatherer : MonoBehaviour
     [Header("Day gathering")]
     [SerializeField] private float gatherTime = 2f;
     [SerializeField] private int woodPerTrip = 1;
+    [SerializeField] private float gatherRadius = 1000f;   // only scavenge trees this close to the camp fire
 
     [Header("Night wander")]
     [SerializeField] private Vector2 wanderSize = new Vector2(8f, 6f);   // area NPCs roam around the bonfire
@@ -26,6 +27,9 @@ public class NPCGatherer : MonoBehaviour
 
     [Header("Impostor")]
     [SerializeField] private bool isImpostor = false;
+
+    [Header("Camp")]
+    [SerializeField] private bool dormant;            // sleeping side-camp member until Camp.Activate()
     [SerializeField] private float sabotageInterval = 6f;  // wander time between thefts
     [SerializeField] private int stealAmount = 3;          // wood taken per theft
     [SerializeField] private float stealDuration = 2f;     // time spent stealing at the pile (catch window)
@@ -48,8 +52,24 @@ public class NPCGatherer : MonoBehaviour
         if (isActiveAndEnabled) ImpostorCount += value ? 1 : -1;
     }
 
+    // Side-camp NPCs sleep until their camp is found.
+    public void SetDormant(bool value)
+    {
+        dormant = value;
+        if (dormant && carryIcon != null) carryIcon.SetActive(false);
+    }
+
+    public void WakeCampMember() => SetDormant(false);
+
+    // Binds this NPC to a specific woodpile (its own camp's) instead of the first one found.
+    public void SetPile(WoodPile p)
+    {
+        if (p != null) pile = p;
+    }
+
     public void Die()
     {
+        if (dormant) return;   // sleeping crew can't be trampled
         GameObject vfx = isImpostor ? impostorDeathVfx : innocentDeathVfx;
         if (vfx != null) Instantiate(vfx, transform.position, Quaternion.identity);
         Destroy(gameObject);
@@ -78,23 +98,55 @@ public class NPCGatherer : MonoBehaviour
         if (isImpostor) ImpostorCount--;
     }
 
+    static T Nearest<T>(Vector3 from) where T : Component
+    {
+        T best = null;
+        float bestD = float.MaxValue;
+        foreach (T t in FindObjectsByType<T>(FindObjectsSortMode.None))
+        {
+            float d = Vector2.SqrMagnitude((Vector2)t.transform.position - (Vector2)from);
+            if (d < bestD) { bestD = d; best = t; }
+        }
+        return best;
+    }
+
     void Awake()
     {
-        if (pile == null)  pile  = FindFirstObjectByType<WoodPile>();
         if (cycle == null) cycle = FindFirstObjectByType<DayNightCycle>();
+        if (pile == null)  pile  = Nearest<WoodPile>(transform.position);
 
-        foreach (Tree t in FindObjectsByType<Tree>(FindObjectsSortMode.None))
-            gatherSpots.Add(t.transform);
-
-        currentSpot = PickTree();
-        Bonfire fire = FindFirstObjectByType<Bonfire>();
+        Bonfire fire = Nearest<Bonfire>(transform.position);
         campCenter = fire != null ? fire.transform.position
                    : pile != null ? pile.transform.position
                    : transform.position;
+
+        RebindTrees();
+
+        currentSpot = PickTree();
+    }
+
+    // Collect the trees this NPC may harvest, limited to the camp's area.
+    void RebindTrees()
+    {
+        gatherSpots.Clear();
+        foreach (Tree t in FindObjectsByType<Tree>(FindObjectsSortMode.None))
+            if (Vector2.Distance(campCenter, t.transform.position) <= gatherRadius)
+                gatherSpots.Add(t.transform);
+    }
+
+    // Bind this NPC to a specific camp bonfire - the crew then gathers wood to,
+    // and wanders around, THIS camp instead of the first fire found.
+    public void SetBonfire(Bonfire fire)
+    {
+        if (fire == null) return;
+        campCenter = fire.transform.position;
+        RebindTrees();
     }
 
     void Update()
     {
+        if (dormant) return;   // side-camp crew do nothing until their camp is activated
+
         bool night = cycle != null && cycle.IsNight;
 
         if (night != wasNight)
@@ -154,6 +206,7 @@ public class NPCGatherer : MonoBehaviour
                 {
                     pile.AddWood(woodPerTrip);
                     SoundManager.Instance?.WoodPut(transform.position);
+                    FloatingText.Show(pile.transform.position, "+" + woodPerTrip + " Wood", FloatingText.WoodColor);
                     carryingWood = false;
                     currentSpot = PickTree();
                     state = State.GoingToGather;
@@ -172,6 +225,7 @@ public class NPCGatherer : MonoBehaviour
                 {
                     pile.AddWood(woodPerTrip);
                     SoundManager.Instance?.WoodPut(transform.position);
+                    FloatingText.Show(pile.transform.position, "+" + woodPerTrip + " Wood", FloatingText.WoodColor);
                     carryingWood = false;
                     state = State.GoToBonfire;
                 }
@@ -260,11 +314,24 @@ public class NPCGatherer : MonoBehaviour
         return Vector2.Distance(transform.position, target) < 0.05f;
     }
 
+    // Editor/scene-view center: the bound camp fire when known, else the first fire found.
+    Vector3 GetDisplayCenter()
+    {
+        if (campCenter != Vector3.zero) return campCenter;
+        Bonfire fire = FindFirstObjectByType<Bonfire>();
+        return fire != null ? fire.transform.position : transform.position;
+    }
+
     void OnDrawGizmos()
     {
-        Bonfire fire = FindFirstObjectByType<Bonfire>();
-        Vector3 center = fire != null ? fire.transform.position : transform.position;
+        Vector3 center = GetDisplayCenter();
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(center, new Vector3(wanderSize.x, wanderSize.y, 0f));
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(0.3f, 1f, 0.4f, 0.85f);
+        Gizmos.DrawWireSphere(GetDisplayCenter(), gatherRadius);
     }
 }

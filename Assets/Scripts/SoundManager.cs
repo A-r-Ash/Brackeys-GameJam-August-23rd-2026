@@ -19,6 +19,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip mumble;
     [SerializeField] private AudioClip zombieGrowl;
     [SerializeField] private AudioClip metalHit;
+    [SerializeField] private AudioClip trapSnap;
+    [SerializeField] private AudioClip dinoDeath;
+    [SerializeField] private AudioClip dinoCaught;
+    [SerializeField] private AudioClip dinoRoar;
+    [SerializeField] private AudioClip dinoScreech;
+    [SerializeField] private AudioClip dinoFootstep;
+    [SerializeField] private AudioClip dinoWalk;
 
     [Header("Spatial")]
     [SerializeField] private float maxHearDistance = 12f;   // beyond this, you can't hear it
@@ -60,4 +67,11 @@ public class SoundManager : MonoBehaviour
     public void Mumble(Vector3 p)      => PlayAt(mumble, p);
     public void ZombieGrowl(Vector3 p) => PlayAt(zombieGrowl, p);
     public void MetalHit(Vector3 p)    => PlayAt(metalHit, p);
+    public void TrapSnap(Vector3 p)    => PlayAt(trapSnap, p);
+    public void DinoDeath(Vector3 p)   => PlayAt(dinoDeath, p);
+    public void DinoCaught(Vector3 p)  => PlayAt(dinoCaught, p);
+    public void DinoRoar(Vector3 p)    => PlayAt(dinoRoar, p);
+    public void DinoScreech(Vector3 p) => PlayAt(dinoScreech, p);
+    public void DinoFootstep(Vector3 p)=> PlayAt(dinoFootstep, p);
+    public void DinoWalk(Vector3 p)    => PlayAt(dinoWalk, p);
 }

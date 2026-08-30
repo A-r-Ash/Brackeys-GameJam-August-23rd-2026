@@ -30,9 +30,9 @@ public class WalkAnimator : MonoBehaviour
 
         if (animator != null) animator.SetBool("IsMoving", moving);
 
-        // Face the direction of travel
+        // Face the direction of travel (sprites are authored facing left)
         if (sprite != null && Mathf.Abs(delta.x) > 0.0001f)
-            sprite.flipX = delta.x < 0f;
+            sprite.flipX = delta.x > 0f;
 
         // Loop footsteps while moving
         if (walkSource != null)

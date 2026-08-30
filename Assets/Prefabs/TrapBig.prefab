@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 43151619848313679}
   - component: {fileID: 4047695940706149150}
-  - component: {fileID: 8842355187669465035}
   - component: {fileID: 1754404691501988227}
+  - component: {fileID: 1975349080671852054}
+  - component: {fileID: 8228352418538762152}
+  - component: {fileID: 309307927493161170}
   m_Layer: 0
   m_Name: TrapBig
   m_TagString: Untagged
@@ -93,8 +95,24 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &8842355187669465035
-BoxCollider2D:
+--- !u!114 &1754404691501988227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692650826695334610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 216e9d9bce021bc4cb179079a0148ba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Trap
+  oneUse: 1
+  sprungVisual: {fileID: 0}
+  animator: {fileID: 8228352418538762152}
+  snapTrigger: Spring
+--- !u!58 &1975349080671852054
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -123,23 +141,35 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.25}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.32, y: 0.32}
-  m_EdgeRadius: 0
---- !u!114 &1754404691501988227
+  m_Radius: 0.16
+--- !u!95 &8228352418538762152
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6692650826695334610}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 05ed20183cca0904b930ba2acbf18ef3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &309307927493161170
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,8 +178,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6692650826695334610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 216e9d9bce021bc4cb179079a0148ba0, type: 3}
+  m_Script: {fileID: 11500000, guid: d37d924f53405a14fbb51787d70f74dd, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Trap
-  oneUse: 1
-  sprungVisual: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::FloatingText
+  riseSpeed: 1.1
+  lifetime: 1.4
+  fadeStart: 0.5

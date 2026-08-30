@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 2159922082181866859}
   - component: {fileID: 5487425566319381067}
   - component: {fileID: 5393157953692774168}
+  - component: {fileID: 4110067903646493517}
   m_Layer: 0
   m_Name: BerryBush
   m_TagString: Untagged
@@ -173,6 +174,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0372b77d7cf7742acf67edd5f9298b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BerryBush
-  berries: 5
   maxBerries: 5
   regrowTime: 10
+  clearance: 0.6
+  maxTries: 25
+--- !u!114 &4110067903646493517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8445217209422161483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37d924f53405a14fbb51787d70f74dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatingText
+  riseSpeed: 1.1
+  lifetime: 1.4
+  fadeStart: 0.5

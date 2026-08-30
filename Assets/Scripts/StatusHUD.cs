@@ -37,8 +37,30 @@ public class StatusHUD : MonoBehaviour
 
         if (npcText != null)      npcText.text = NPCGatherer.Count.ToString();
         if (impostorText != null) impostorText.text = NPCGatherer.ImpostorCount.ToString();
-        if (pile != null && woodText != null)     woodText.text = pile.Count.ToString();
-        if (foodPile != null && foodText != null) foodText.text = foodPile.Count.ToString();
+
+        // Each count is summed across BOTH camps' piles.
+        if (woodText != null) woodText.text = TotalWood().ToString();
+        if (foodText != null) foodText.text = TotalFood().ToString();
+
         if (bonfire != null && fireText != null)  fireText.text = Mathf.CeilToInt(bonfire.CurrentFuel).ToString();
+    }
+
+    // Wood/food across every camp pile; falls back to the serialized single pile.
+    int TotalWood()
+    {
+        var all = FindObjectsByType<WoodPile>(FindObjectsSortMode.None);
+        if (all.Length == 0) return pile != null ? pile.Count : 0;
+        int total = 0;
+        foreach (WoodPile p in all) total += p.Count;
+        return total;
+    }
+
+    int TotalFood()
+    {
+        var all = FindObjectsByType<FoodPile>(FindObjectsSortMode.None);
+        if (all.Length == 0) return foodPile != null ? foodPile.Count : 0;
+        int total = 0;
+        foreach (FoodPile p in all) total += p.Count;
+        return total;
     }
 }

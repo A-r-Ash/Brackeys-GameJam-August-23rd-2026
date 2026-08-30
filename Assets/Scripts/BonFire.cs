@@ -23,37 +23,60 @@ public class Bonfire : MonoBehaviour
     [SerializeField] private SpriteRenderer fireSprite;
     [SerializeField] private Sprite deadSprite;          // shown by day (fire is out)
 
+    [Header("Camp role")]
+    [SerializeField] private bool causesDefeat = true;   // main camp's fire out = lose; side fires just go out
+    private bool campActive;                             // false until a Camp component activates it
+
     public float CurrentFuel => currentFuel;
     public float MaxFuel => maxFuel;
     public int TimesFed { get; private set; }
 
-    void Start()
+    void Awake()
     {
+        campActive = causesDefeat;   // a lone main fire works without a Camp component
+        currentFuel = maxFuel;
+    }
+
+    public void CampActivate()
+    {
+        // Called when a Camp is first found/activated: the fire lights and refills.
+        campActive = true;
         currentFuel = maxFuel;
     }
 
     void Update()
     {
-        if (cycle != null && cycle.IsNight)
+        bool night = cycle != null && cycle.IsNight;
+
+        if (night)
         {
-            // Fire only burns down at night
-            currentFuel -= drainPerSecond * Time.deltaTime;
-            if (currentFuel <= 0f)
+            bool lit = false;
+
+            if (campActive)
             {
-                currentFuel = 0f;
-                GameStateManager.Instance?.Lose();   // fire out → game over
+                // Active fires only burn down at night
+                currentFuel -= drainPerSecond * Time.deltaTime;
+                if (currentFuel <= 0f)
+                {
+                    currentFuel = 0f;
+                    if (causesDefeat) GameStateManager.Instance?.Lose();   // only main fire out = defeat
+                }
+                lit = currentFuel > 0f;                                    // side fires go out and wait for wood
             }
 
             // Pulse the light at night
             if (fireLight != null)
             {
-                fireLight.enabled = true;
-                fireLight.intensity = baseIntensity + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;
+                fireLight.enabled = lit;
+                if (lit) fireLight.intensity = baseIntensity + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;
             }
 
-            if (fireSource != null && !fireSource.isPlaying) fireSource.Play();   // crackle at night
+            if (fireSource != null && lit && !fireSource.isPlaying) fireSource.Play();
+            else if (fireSource != null && !lit && fireSource.isPlaying) fireSource.Pause();
 
-            if (fireAnimator != null) fireAnimator.enabled = true;               // animate the flames
+            if (fireAnimator != null) fireAnimator.enabled = lit;             // flames only while lit
+            if (fireSprite != null && deadSprite != null && !lit)
+                fireSprite.sprite = deadSprite;                               // show the dead-fire sprite
         }
         else
         {

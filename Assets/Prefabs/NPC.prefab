@@ -147,10 +147,12 @@ MonoBehaviour:
   moveSpeed: 0.5
   gatherTime: 2
   woodPerTrip: 1
+  gatherRadius: 20
   wanderSize: {x: 1.5, y: 1}
   separationRadius: 0.5
   separationStrength: 0
   isImpostor: 0
+  dormant: 0
   sabotageInterval: 6
   stealAmount: 3
   stealDuration: 2
